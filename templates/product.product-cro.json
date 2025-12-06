@@ -3,6 +3,10 @@
     "main_product_cro_enajbC": {
       "type": "main-product-cro",
       "blocks": {
+        "review_wMM6N6": {
+          "type": "review",
+          "settings": {}
+        },
         "title": {
           "type": "title",
           "settings": {
@@ -13,6 +17,12 @@
           "type": "price",
           "settings": {
             "show_tax_info": false
+          }
+        },
+        "image_QPYcdY": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/nutrition-highlights.png"
           }
         },
         "description": {
@@ -61,8 +71,10 @@
         }
       },
       "block_order": [
+        "review_wMM6N6",
         "title",
         "price",
+        "image_QPYcdY",
         "description",
         "flavor_picker_8NFdei",
         "variant_picker",
@@ -81,6 +93,15 @@
         "enable_video_looping": false,
         "media_color_scheme": "background-2",
         "padding_bottom": "xl"
+      }
+    },
+    "cro_customer_reviews_UmEGVX": {
+      "type": "cro-customer-reviews",
+      "name": "CRO-Customer",
+      "settings": {
+        "card_pic": "shopify:\/\/shop_images\/review-customer.png",
+        "testimonial_quote": "These are just so good. The Tandoori Ranch one was my absolute favorite, I want to be able to buy a shaker of the seasonings.",
+        "testimonial_name": "Brittany"
       }
     },
     "main-product": {
@@ -200,6 +221,7 @@
     },
     "product-recommendations": {
       "type": "product-recommendations",
+      "disabled": true,
       "settings": {
         "color_scheme": "",
         "subheading": "",
@@ -251,13 +273,50 @@
       "settings": {
         "include_margins": true
       }
+    },
+    "cro_move_to_top_T7BakE": {
+      "type": "cro-move-to-top",
+      "name": "CRO Hero",
+      "settings": {
+        "title": "WHY CUSTOMERS LOVE DAAL",
+        "hero_text": "<ul><li>Extreme crunch. Extreme flavor.<\/li><li>Up to 27g protein and up to 9g fiber per bag.<\/li><li>Ready for backpacks, desks, and road trips.<\/li><li>Indian-American fusion that actually tastes like something new.<\/li><\/ul>",
+        "hero_img_mobile": "shopify:\/\/shop_images\/mobile-hero.png"
+      }
+    },
+    "product_recommendations_cro_kX3NUR": {
+      "type": "product-recommendations-cro",
+      "name": "Product recommendations CRO",
+      "settings": {
+        "color_scheme": "background-2",
+        "subheading": "",
+        "heading": "YOU MAY ALSO LIKE",
+        "heading_size": "h3",
+        "description": "",
+        "products_limit": 4,
+        "image_ratio": "square",
+        "image_fit": "cover",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_desc": false,
+        "mobile_slider_layout_type": "with_arrows",
+        "button_show": false,
+        "button_label": "Button label",
+        "button_style": "primary",
+        "button_link": "",
+        "button_arrow": true,
+        "padding_top": "no-indent",
+        "padding_bottom": "xl"
+      }
     }
   },
   "order": [
     "main_product_cro_enajbC",
+    "cro_customer_reviews_UmEGVX",
     "main-product",
     "collapsible_content_QQ6Xqb",
     "product-recommendations",
-    "opinew-reviews-product-page-code"
+    "opinew-reviews-product-page-code",
+    "cro_move_to_top_T7BakE",
+    "product_recommendations_cro_kX3NUR"
   ]
 }

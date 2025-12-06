@@ -1,0 +1,82 @@
+<style>
+    #cro-move-{{ section.id }}{
+        width:100%;
+        margin:0 auto;
+        padding:6.4rem 2rem 0rem;
+        background:#F2D321;
+    }
+    #cro-move-{{ section.id }} .hero-content{
+        display:flex;
+        flex-direction:column;
+        width:100%;
+        align-items:center;
+        gap:20px;
+    }
+    #cro-move-{{ section.id }} .hero-title h2{
+        font-size:30px;
+    }
+    #cro-move-{{ section.id }} .hero-text ul{
+        list-style:square;
+        max-width:100%;
+        margin-left:2.5rem;
+    }
+    #cro-move-{{ section.id }} .btn-container{
+        width:100%;
+    }
+    #cro-move-{{ section.id }} .btn{
+        display:block;
+        color:#fff;
+        background:#E2362E;
+        border-radius:50px;
+        padding:15px;
+        text-align:center;
+        font-size:19px;
+    }
+    #cro-move-{{ section.id }} .hero-container{
+        margin-top:40px;
+    }
+</style>
+<div id="cro-move-{{ section.id }}">
+    <div class="hero-content">
+        <div class="hero-title">
+            <h2>{{ section.settings.title }}</h2>
+        </div>
+        <div class="hero-text">
+            {{ section.settings.hero_text }}
+        </div>
+        <div class="btn-container">
+            <a class="btn btn-move-top" title="buy-now" href="#atc-scroll-id">
+                Buy Now
+            </a>
+        </div>
+    </div>
+    <div class="hero-container">
+        <img src="{{ section.settings.hero_img_mobile | image_url }}">
+    </div>
+</div>
+{% schema %}
+{
+    "name": "CRO Hero",
+    "presets": [{
+        "name": "CRO Hero"
+    }],
+    "settings": [
+        {
+            "type": "text",
+            "default":"WHY CUSTOMERS LOVE DAAL",
+            "id": "title",
+            "label": "Title"
+        },
+        {
+            "type":"richtext",
+            "id":"hero_text",
+            "label": "Main Content"
+        },
+        {
+            "type":"image_picker",
+            "id":"hero_img_mobile",
+            "label": "Hero Image Mobile"
+        }
+    ]
+}
+{% endschema %}

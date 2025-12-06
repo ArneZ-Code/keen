@@ -59,13 +59,6 @@
     padding-bottom:1.2em;
     border-bottom:#000 1px solid;
   }
-  {% comment %} #CROProduct-{{ section.id }} .product__description-wrapper:after{
-    height:1px;
-    position:absolute;
-    bottom:0;
-    background:#000000;
-    content:"";
-  } {% endcomment %}
   #CROProduct-{{section.id }} .product__buy-buttons{
     margin-top:0 !important;
     background:#F2D321;
@@ -422,6 +415,20 @@
         {%- assign product_form_id = 'product-form-' | append: section.id -%}
         {%- for block in section.blocks -%}
           {%- case block.type -%}
+            {%- when 'review' -%}
+              <style>
+                .review-picker svg{
+                  width:80px;
+                }
+                .review-picker{
+                  color:#424242;
+                  font-size:14px;
+                  display:flex;
+                  gap:7px;
+                  align-items:center;
+                }
+              </style>
+              <div class="review-picker">{% render 'review-stars' %} {{ block.settings.text }}</div>
             {%- when 'flavor_picker' -%}
               {% render 'flavor-picker' %}
             {%- when 'text' -%}
@@ -537,6 +544,10 @@
                   {% endif %}
                 </div>
               {% endif %}
+            {%- when 'image' -%}
+              <div class="highlight-img">
+                <img src="{{ block.settings.image | image_url }}">
+              </div>
             {%- when 'description' -%}
               {% liquid
                 assign has_excerpt = false
@@ -938,7 +949,7 @@
                       {%- render 'gift-card-recipient-form', product: product, form: form, section: section -%}
                     {%- endif -%}
 
-                    <div class="product-form__buttons">
+                    <div class="product-form__buttons" id="atc-scroll-id">
                       <div class="product-form__buttons-row">
                         {% if block.settings.show_quantity %}
                           <div
@@ -1014,6 +1025,7 @@
                         <button
                           type="submit"
                           name="add"
+                          
                           class="product-form__submit button button--{%- if show_dynamic_checkout -%}transparent{% else %}primary{%- endif -%}"
                           {% if product.selected_or_first_available_variant.available == false %}
                             disabled
@@ -2043,6 +2055,18 @@
       ]
     },
     {
+      "type":"image",
+      "name":"Image",
+      "limit": 1,
+      "settings":[
+        {
+          "id":"image",
+          "type": "image_picker",
+          "label": "Image"
+        }
+      ]
+    },
+    {
       "type": "popup",
       "name": "t:sections.main-product.blocks.popup.name",
       "limit": 2,
@@ -2173,6 +2197,19 @@
           "id": "show_on_mobile",
           "default": true,
           "label": "t:sections.main-product.blocks.product_countdown.settings.show_on_mobile.label"
+        }
+      ]
+    },
+    {
+      "type":"review",
+      "name": "review",
+      "limit":1,
+      "settings":[
+        {
+          "type":"text",
+          "id":"text",
+          "default":"4.4 Average (50+ Reviews)",
+          "label": "Text"
         }
       ]
     },

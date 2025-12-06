@@ -1,0 +1,86 @@
+<style>
+    #cust-reviews-{{section.id }}{
+        width:100%;
+        margin:0 auto;
+        padding:0 2rem 6.4rem;
+        background:#fff;
+    }
+    #cust-reviews-{{section.id }} .card-container{
+        border:1px solid #000;
+        border-radius:15px;
+        padding:20px;
+        display:flex;
+        width:100%;
+        justify-content:center;
+        align-items:center;
+        flex-direction:column;
+        gap:20px;
+    }
+    #cust-reviews-{{section.id }} .testimonial-quote{
+        text-align:center;
+        size:16px;
+        line-height:25px;
+    }
+    #cust-reviews-{{section.id }} .testimonial-name{
+        color:#464646;
+    }
+    #cust-reviews-{{section.id }} .verified{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        font-size:10px;
+        color:rgba(0, 0, 0, 0.7);
+        svg{
+            opacity:0.7;
+        }
+    }
+</style>
+<div id="cust-reviews-{{ section.id }}">
+    <div class="card-container">
+        <div class="card-pic">
+            <img src="{{ section.settings.card_pic | image_url }}">
+        </div>
+        <div class="review-stars">
+            {% render 'review-stars' %}
+        </div>
+        <div class="testimonial-quote">
+            "{{ section.settings.testimonial_quote }}"
+        </div>
+        <div class="testimonial-name">
+            - {{ section.settings.testimonial_name }}
+        </div>
+        <div class="verified">
+            {% render 'verified-check' %} VERIFIED PURCHASE
+        </div>
+    </div>
+</div>
+{% schema %}
+{
+    "name":"CRO Customer Reviews",
+    "tag":"section",
+    "presets":[
+        {
+            "name":"CRO-Customer"
+        }
+    ],
+    "settings": [
+        {
+            "type":"image_picker",
+            "id": "card_pic",
+            "label": "Review Pic"
+        },
+        {
+            "type":"text",
+            "id":"testimonial_quote",
+            "default":"These are just so good. The Tandoori Ranch one was my absolute favorite, I want to be able to buy a shaker of the seasonings.",
+            "label": "Testimonial Quote"
+        },
+        {
+            "type":"text",
+            "id":"testimonial_name",
+            "default":"Brittany",
+            "label": "Testimonial Name"
+        }
+    ]
+}
+{% endschema %}
