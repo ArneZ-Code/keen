@@ -7,6 +7,7 @@
         width:100%;
         flex-direction:column;
         align-items:center;
+        position:relative;
     }
     #keen-flavor-picker .flavor-picker-heading{
         max-width: 80%;
@@ -35,6 +36,7 @@
     }
 </style>
 <div id="keen-flavor-picker">
+    <div id="flavors" style="height:6.4rem; position:absolute;z-index:-1;top:-6.4rem;"></div>
     <div class="flavor-picker-heading">
         <strong>Select Flavor:</strong> <span class="flavor-title">{{ product.title }}</span>
     </div>
@@ -48,16 +50,17 @@
             {% assign p_handle = p.handle %}
             {% assign variant_id = p.selected_or_first_available_variant %}
             {% assign p_id = p.id %}
-            <div 
+            <a
                 class="flavor-picker-product {% if p_id == product.id %}active-product{% endif %}"
                 data-product-id="{{ p_id }}"
                 data-product-handle="{{ p_handle }}"
                 data-product-price="{{ p_price }}"
                 data-product-title="{{ p_title }}"
                 data-product-variant-id="{{ variant_id.id }}"
+                href="{{p.url}}?view=product-cro#flavors"
             >
                 <img src="{{ p_thumb }}" alt="{{ p_title }}" loading="lazy">
-            </div>
+            </a>
         {% endfor %}
     </div>
 </div>
