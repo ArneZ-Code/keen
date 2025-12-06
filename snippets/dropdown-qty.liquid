@@ -32,3 +32,14 @@
         <option value="3">3 Bags /{{ product.price | times:3 | money }}</option>
     </select>
 </div>
+<script>
+    const dropdown = document.querySelector('#dropdown-qty');
+    const select = dropdown.querySelector('select[name="qty-selection"]');
+    select.addEventListener('change',handleSelect);
+    function handleSelect(){
+        const s = this;
+        const value = s.value;
+        const qtyInput = document.querySelector('product-form .quantity__input');
+        qtyInput.value = value;
+    }
+</script>
