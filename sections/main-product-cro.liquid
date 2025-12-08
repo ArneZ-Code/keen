@@ -86,7 +86,7 @@
     font-size:13px;
     text-align:center;
   }
-  @media(min-width:1024px){
+  @media(min-width:990px){
     #CROProduct-{{section.id }} .product__description-wrapper{
       order:3;
       border-radius:0 0 10px 10px;
@@ -411,8 +411,9 @@
             </div>
           </div>
         {% endif %}
+        {% render 'desktop-reviews-slider' %}
       </div>
-
+      
       <div id="ProductInfo-{{ section.id }}" data-section="{{ section.id }}" class="product__info-container">
         {% if settings.show_breadcrumbs %}
           <nav class="breadcrumb breadcrumb__desktop body-small" role="navigation" aria-label="breadcrumbs">

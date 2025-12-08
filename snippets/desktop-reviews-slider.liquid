@@ -1,0 +1,133 @@
+<style>
+    #desktop-reviews-slider{
+        width:calc(100% - 7.2rem);
+        margin-left:auto;
+    }
+    #desktop-reviews-slider .card-container{
+        border:1px solid #000;
+        border-radius:15px;
+        padding:20px;
+        display:flex;
+        width:100%;
+        justify-content:space-between;
+        align-items:center;
+    }
+    #desktop-reviews-slider .review-thumb{
+        border-radius:100%;
+        display:flex;
+        flex-direction:column;
+        overflow:hidden;
+        width:66px;
+    }
+    #desktop-reviews-slider .card-content{
+        width:calc(100% - 80px);
+        display:flex;
+        flex-direction:column;
+        gap:14px;
+    }
+    #desktop-reviews-slider .testimonial-quote{
+        font-size:14px;
+    }
+    #desktop-reviews-slider .testimonial-name{
+        font-size:15px;
+    }
+    #desktop-reviews-slider .review-stars{
+        width:100%;
+        display:flex;
+        justify-content:space-between;
+    }
+    #desktop-reviews-slider .rev-stars{
+        width:97px;
+        svg{
+            max-width:100%;
+        }
+    }
+    #desktop-reviews-slider .verified{
+        font-size:10px;
+        display:flex;
+        align-items:center;
+        gap:5px;
+        opacity:0.7;
+        svg{
+            width:10px;
+        }
+    }
+    #desktop-reviews-slider .swiper-pagination{
+        margin-top:20px;
+    }
+    #desktop-reviews-slider .swiper-pagination-bullet{
+        background:#D9D9D9;
+        width:8px;
+        height:8px;
+        border-radius:20px;
+        border:none;
+    }
+    #desktop-reviews-slider .swiper-pagination-bullet-active{
+        background:#E2362E;
+    }
+    @media(max-width:989px){
+        #desktop-reviews-slider{
+            display:none;
+        }
+    }
+</style>
+<div id="desktop-reviews-slider">
+    <div class="swiper">
+        <div class="swiper-wrapper">
+            <div class="card-container swiper-slide">
+                <div class="review-thumb">
+                    <img src="https://cdn.shopify.com/s/files/1/0641/9169/2992/files/review-customer.png?v=1765040330">
+                </div>
+                <div class="card-content">
+                    <div class="review-stars">
+                        <div class="rev-stars">
+                            {% render 'review-stars' %}
+                        </div>
+                        <div class="verified">
+                            {% render 'verified-check' %} VERIFIED PURCHASE
+                        </div>
+                    </div>
+                    <div class="testimonial-quote">
+                        "These are just so good. The Tandoori Ranch one was my absolute favorite, I want to be able to buy a shaker of the seasonings."
+                    </div>
+                    <div class="testimonial-name">
+                        - Brittany
+                    </div>
+                </div>
+            </div>
+            <div class="card-container swiper-slide">
+                <div class="review-thumb">
+                    <img src="https://cdn.shopify.com/s/files/1/0641/9169/2992/files/review-customer.png?v=1765040330">
+                </div>
+                <div class="card-content">
+                    <div class="review-stars">
+                        <div class="rev-stars">
+                            {% render 'review-stars' %}
+                        </div>
+                        <div class="verified">
+                            {% render 'verified-check' %} VERIFIED PURCHASE
+                        </div>
+                    </div>
+                    <div class="testimonial-quote">
+                        "These are just so good. The Tandoori Ranch one was my absolute favorite, I want to be able to buy a shaker of the seasonings."
+                    </div>
+                    <div class="testimonial-name">
+                        - Brittany
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+        const desktop_reviews = new Swiper('#desktop-reviews-slider .swiper',{
+            loop:false,
+            pagination:{
+                el:".swiper-pagination",
+                clickable:true
+            }
+        })
+    })
+</script>
