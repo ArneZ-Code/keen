@@ -11,6 +11,14 @@
   #rec-CRO-{{ section.id }} .title{
     font-size:30px;
   }
+  @media(min-width:1024px){
+    #rec-CRO-{{ section.id }} .product-recommendations__top{
+      justify-content:center;
+      h2{
+        font-size:40px;
+      }
+    }
+  }
 </style>
 <div id="rec-CRO-{{ section.id }}" class="product-recommendations__outer section-{{ section.id }}-padding color-{{ section.settings.color_scheme }} background{% if section.settings.mobile_slider_layout_type == 'visible_overflow' %} product-recommendations--visible-overflow{% endif %}">
   <product-recommendations
