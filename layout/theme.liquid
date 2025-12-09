@@ -388,6 +388,9 @@
       <script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
     <script src="{{ 'product-model.js' | asset_url }}" defer></script>
-    {%- render 'cro-pdp-sticky-atc' -%}
+    <script>console.log({{ template | json }})</script>
+    {% if template == 'product.product-cro' %}
+      {%- render 'cro-pdp-sticky-atc' -%}
+    {% endif %}
   </body>
 </html>
