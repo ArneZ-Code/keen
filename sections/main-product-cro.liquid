@@ -679,7 +679,8 @@
                       {%- if block.settings.description != blank -%}
                         {{- block.settings.description | escape -}}
                       {%- else -%}
-                        {{- product.description -}}
+                        {% comment %} {{- product.description -}} {% endcomment %}
+                         {{ product.metafields.custom.short_description | metafield_tag }}
                       {%- endif -%}
                     </div>
                     {%- comment -%} START OF CLOSEING TAGS FOR DESCRIPTION READ MORE BUTTON {%- endcomment -%}

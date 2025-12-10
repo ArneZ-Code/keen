@@ -77,7 +77,7 @@
         {% endfor %}
     </div>
 </div>
-<script>
+{% comment %} <script>
     const flavor_ref = {};
     {% for p in current_collection.products %}
         {% assign p_id = p.id %}
@@ -138,4 +138,4 @@
         input_pid.value = productId;
         input_vid.value = variantId;
     }
-</script>
+</script> {% endcomment %}
