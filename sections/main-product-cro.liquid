@@ -618,7 +618,8 @@
               {% endif %}
             {%- when 'image' -%}
               <div class="highlight-img">
-                <img src="{{ block.settings.image | image_url }}">
+                {% comment %} <img src="{{ block.settings.image | image_url }}"> {% endcomment %}
+                 {% render 'highlights' %}
               </div>
             {%- when 'description' -%}
               {% liquid
