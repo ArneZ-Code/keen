@@ -50,7 +50,7 @@
     padding-bottom:585px;
     max-height:585px;
   }
-  
+
   #CROProduct-{{ section.id }} .product__media-sublist{
     max-width:24rem;
   }
@@ -87,6 +87,37 @@
     margin-top:10px;
     padding:14px;
   }
+  /* Variant dropdown styled like quantity dropdown */
+  #CROProduct-{{section.id}} .product-parameters {
+    margin-top: 0;
+    padding-top: 1.2em;
+    background: #FFF7E6;
+  }
+  #CROProduct-{{section.id}} .dropdown-variant-cro {
+    width: 100%;
+    position: relative;
+    background: #FFF7E6;
+    padding: 0 1.3em;
+  }
+  #CROProduct-{{section.id}} .dropdown-variant-cro select {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #000;
+    padding-bottom: 0.3em;
+    position: relative;
+    z-index: 1;
+    color: #000;
+    font-weight: bold;
+  }
+  #CROProduct-{{section.id}} .dropdown-variant-cro .arrow {
+    position: absolute;
+    right: 1.3em;
+    width: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 0;
+  }
   #CROProduct-{{section.id }} .low-carb{
     font-size:13px;
     text-align:center;
@@ -121,7 +152,7 @@
     #CROProduct-{{section.id }} .highlight-img{
       margin-top:15px;
       svg{
-        max-width:100%;        
+        max-width:100%;
       }
     }
     #CROProduct-{{section.id }} .highlight-img svg{
@@ -470,7 +501,7 @@
         {% endif %}
         {% render 'desktop-reviews-slider' %}
       </div>
-      
+
       <div id="ProductInfo-{{ section.id }}" data-section="{{ section.id }}" class="product__info-container">
         {% if settings.show_breadcrumbs %}
           <nav class="breadcrumb breadcrumb__desktop body-small" role="navigation" aria-label="breadcrumbs">
@@ -493,19 +524,22 @@
           {%- case block.type -%}
             {%- when 'review' -%}
               <style>
-                .review-picker svg{
-                  width:80px;
+                .review-picker svg {
+                  width: 80px;
                 }
-                .review-picker{
-                  color:#424242;
-                  font-size:14px;
-                  display:flex;
-                  gap:7px;
-                  align-items:center;
-                  margin-top:0 !important;
+                .review-picker {
+                  color: #424242;
+                  font-size: 14px;
+                  display: flex;
+                  gap: 7px;
+                  align-items: center;
+                  margin-top: 0 !important;
                 }
               </style>
-              <div class="review-picker">{% render 'review-stars' %} {{ block.settings.text }}</div>
+              <div class="review-picker">
+                {% render 'review-stars' %}
+                {{ block.settings.text }}
+              </div>
             {%- when 'flavor_picker' -%}
               {% render 'flavor-picker' %}
             {%- when 'text' -%}
@@ -624,7 +658,7 @@
             {%- when 'image' -%}
               <div class="highlight-img">
                 {% comment %} <img src="{{ block.settings.image | image_url }}"> {% endcomment %}
-                 {% render 'highlights' %}
+                {% render 'highlights' %}
               </div>
             {%- when 'description' -%}
               {% liquid
@@ -685,7 +719,7 @@
                         {{- block.settings.description | escape -}}
                       {%- else -%}
                         {% comment %} {{- product.description -}} {% endcomment %}
-                         {{ product.metafields.custom.short_description | metafield_tag }}
+                        {{ product.metafields.custom.short_description | metafield_tag }}
                       {%- endif -%}
                     </div>
                     {%- comment -%} START OF CLOSEING TAGS FOR DESCRIPTION READ MORE BUTTON {%- endcomment -%}
@@ -819,6 +853,21 @@
                         </script>
                       </variant-radios>
                     {% else %}
+                      {% comment %}
+                        NOTE: Alternative direct variant ID approach (works but uses custom JS):
+                        <variant-selects ...>
+                          <div class="dropdown-variant-cro">
+                            <select name="id" form="{{ product_form_id }}">
+                              {%- for variant in product.variants -%}
+                                <option value="{{ variant.id }}">{{ variant.title }} / {{ variant.price | money }}</option>
+                              {%- endfor -%}
+                            </select>
+                          </div>
+                        </variant-selects>
+                        + custom JS to handle variant ID selection directly
+                      {% endcomment %}
+
+                      {% comment %} Option-based approach - works with existing VariantSelects JS {% endcomment %}
                       <variant-selects
                         id="variant-selects-{{ section.id }}"
                         class="no-js-hidden"
@@ -827,103 +876,30 @@
                         {{ block.shopify_attributes }}
                       >
                         {%- for option in product.options_with_values -%}
-                          {% liquid
-                            assign is_color_option = false
-
-                            # for metafields color
-                            for value in option.values
-                              if settings.enable_color_swatch and value.swatch.color != blank
-                                assign is_color_option = true
-                              endif
-                            endfor
-
-                            # for custom option color
-                            assign color_trigger = settings.trigger_swatch | strip | newline_to_br | split: '<br />'
-                            assign name_option = option.name | handle | strip
-                            for item in color_trigger
-                              assign item_temp = item | handle | strip
-                              if settings.enable_color_swatch and name_option == item_temp
-                                assign is_color_option = true
-                              endif
-                            endfor
-
-                            # get color_value for selected color option
-                            if is_color_option
-                              assign color_value = blank
-                              for value in option.values
-                                if settings.enable_color_swatch and option.selected_value == value
-                                  if value.swatch.image != blank
-                                    assign color_image = value.swatch.image | image_url: width: 60
-                                    assign color_value = 'url(' | append: color_image | append: ') no-repeat center/cover'
-                                  elsif value.swatch.color != blank
-                                    assign color_value = 'rgb(' | append: value.swatch.color.rgb | append: ')'
-                                  else
-                                    assign init_color_value = value.name | handle | strip
-                                    assign color_value = init_color_value | remove: '-'
-
-                                    if settings.custom_colors != blank
-                                      assign custom_colors_string = settings.custom_colors | strip
-                                      assign custom_colors_obj = custom_colors_string | newline_to_br | split: '<br />'
-
-                                      for obj in custom_colors_obj
-                                        assign obj_strip = obj | strip
-                                        assign obj_key = obj_strip | split: ':' | first
-                                        assign obj_value = obj_strip | split: ':' | last
-                                        assign obj_color_name = obj_key | handle | strip
-
-                                        if init_color_value == obj_color_name
-                                          assign obj_color_value = obj_value | strip
-                                          if obj_color_value contains 'gradient'
-                                            assign color_value = obj_color_value
-                                          else
-                                            assign color_value = obj_color_value | remove: '-'
-                                          endif
-                                          break
-                                        endif
-                                      endfor
-                                    endif
-                                  endif
-                                endif
-                              endfor
-                            endif
-
-                            assign has_color_swatch = false
-                            if is_color_option and color_value != blank
-                              assign has_color_swatch = true
-                            endif
-                          %}
-                          <fieldset
-                            class="product-form__controls product-form__controls--dropdown"
-                            id="SingleOptionSelector-{{ forloop.index0 }}"
-                          >
-                            <div class="select dropdown-select" form="{{ product_form_id }}">
-                              <div
-                                class="select-label secondary_text{% if has_color_swatch %} select-label--with-color{% endif %}"
-                                {% if has_color_swatch %}
-                                  style="--swatch-color: {{ color_value }}; --border-radius: {{ settings.swatch_border_radius }}px;"
-                                {% endif %}
+                          <fieldset class="product-form__controls">
+                            <div class="dropdown-variant-cro">
+                              <div class="arrow">
+                                {% render 'bottom-arrow' %}
+                              </div>
+                              <select
+                                id="Option-{{ section.id }}-{{ forloop.index0 }}"
+                                name="options[{{ option.name | escape }}]"
+                                form="{{ product_form_id }}"
                               >
-                                <div>{{ option.name }}:</div>
-                                <span>{{- option.selected_value }}</span>
-                              </div>
-                              <div class="select-wrapper">
-                                <div class="select-wrapper__scroll-shadow shadow-top"></div>
-                                <ul class="product-form__controls-group">
-                                  {% render 'product-variant-options',
-                                    product: product,
-                                    option: option,
-                                    block: block,
-                                    has_color_swatch: has_color_swatch,
-                                    is_dropdown: true
-                                  %}
-                                </ul>
-                                <div class="select-wrapper__scroll-shadow shadow-bottom"></div>
-                              </div>
-
-                              {% render 'icon-caret' %}
+                                {%- for value in option.values -%}
+                                  <option
+                                    value="{{ value | escape }}"
+                                    {% if option.selected_value == value %}
+                                      selected="selected"
+                                    {% endif %}
+                                  >
+                                    {{- value -}}
+                                  </option>
+                                {%- endfor -%}
+                              </select>
                             </div>
                           </fieldset>
-                        {% endfor %}
+                        {%- endfor -%}
                         <script type="application/json">
                           {{ product.variants | json }}
                         </script>
@@ -1104,7 +1080,7 @@
                         <button
                           type="submit"
                           name="add"
-                          
+
                           class="product-form__submit button button--{%- if show_dynamic_checkout -%}transparent{% else %}primary{%- endif -%}"
                           {% if product.selected_or_first_available_variant.available == false %}
                             disabled
@@ -1627,9 +1603,8 @@
       </div>
     </div>
   </product-modal>
-  {% assign all_collection =  product.collections[0].handle %}
+  {% assign all_collection = product.collections[0].handle %}
   {% assign current_collection = collections[all_collection] %}
-  
 
   <script type="application/ld+json">
     {{ product | structured_data }}
@@ -1679,7 +1654,7 @@
   "class": "product-section",
   "presets": [
     {
-      "name":"Main Product CRO"
+      "name": "Main Product CRO"
     }
   ],
   "settings": [
@@ -1845,15 +1820,15 @@
       ]
     },
     {
-      "type":"short_description",
-      "limit":1,
-      "name":"Short Description",
-      "settings":[
+      "type": "short_description",
+      "limit": 1,
+      "name": "Short Description",
+      "settings": [
         {
-          "type":"text",
-          "id":"short_description",
-          "default":"The low-carb, high-protein snack that keeps you full.",
-          "label":"Short Description"
+          "type": "text",
+          "id": "short_description",
+          "default": "The low-carb, high-protein snack that keeps you full.",
+          "label": "Short Description"
         }
       ]
     },
@@ -2137,12 +2112,12 @@
       ]
     },
     {
-      "type":"image",
-      "name":"Image",
+      "type": "image",
+      "name": "Image",
       "limit": 1,
-      "settings":[
+      "settings": [
         {
-          "id":"image",
+          "id": "image",
           "type": "image_picker",
           "label": "Image"
         }
@@ -2190,9 +2165,9 @@
       ]
     },
     {
-      "type":"flavor_picker",
-      "name":"Flavor Picker",
-      "limit":1,
+      "type": "flavor_picker",
+      "name": "Flavor Picker",
+      "limit": 1,
       "settings": []
     },
     {
@@ -2283,14 +2258,14 @@
       ]
     },
     {
-      "type":"review",
+      "type": "review",
       "name": "review",
-      "limit":1,
-      "settings":[
+      "limit": 1,
+      "settings": [
         {
-          "type":"text",
-          "id":"text",
-          "default":"4.4 Average (50+ Reviews)",
+          "type": "text",
+          "id": "text",
+          "default": "4.4 Average (50+ Reviews)",
           "label": "Text"
         }
       ]

@@ -56,9 +56,8 @@
         },
         "variant_picker": {
           "type": "variant_picker",
-          "disabled": true,
           "settings": {
-            "picker_type": "button",
+            "picker_type": "dropdown",
             "swatch_type": "color",
             "variant_image_size": "portrait"
           }
@@ -82,7 +81,7 @@
           "type": "buy_buttons",
           "settings": {
             "show_dynamic_checkout": true,
-            "show_quantity": true,
+            "show_quantity": false,
             "show_gift_card_recipient": false
           }
         }
@@ -221,10 +220,7 @@
           }
         }
       },
-      "block_order": [
-        "accordion_nWbwig",
-        "accordion_pLKkiD"
-      ],
+      "block_order": ["accordion_nWbwig", "accordion_pLKkiD"],
       "disabled": true,
       "settings": {
         "color_scheme": "background-1",
@@ -285,9 +281,7 @@
           }
         }
       },
-      "block_order": [
-        "instafeed_app_block_dg3L9t"
-      ],
+      "block_order": ["instafeed_app_block_dg3L9t"],
       "disabled": true,
       "settings": {
         "include_margins": true
